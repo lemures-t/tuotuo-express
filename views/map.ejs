@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>妥妥 - 妹纸你妥妥地向前走</title>
+    <style type="text/css">
+      *{
+          margin:0px;
+          padding:0px;
+      }
+      body, button, input, select, textarea {
+          font: 12px/16px Verdana, Helvetica, Arial, sans-serif;
+      }
+      #info{
+          width:603px;
+          padding-top:3px;
+          overflow:hidden;
+      }
+      .btn{
+          width:142px;
+      }
+      #container{
+      	width:600px;
+      	height:767px;
+      }
+    </style>
+    <script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>
+    <%# <script type="text/javascript" src ="/js/tencent-map.js"></script>%>
+    <script type="text/javascript">
+      var init = function() {
+          var center = new qq.maps.LatLng(39.930, 116.420);
+          var map = new qq.maps.Map(document.getElementById('container'),{
+              center: center,
+              zoom: 13
+          });
+          var path1=[];
+          var coordinators = JSON.parse('<%= JSON.stringify(coordinators)%>')
+
+          /*new qq.maps.LatLng(39.910, 116.399),
+          new qq.maps.LatLng(39.920, 116.405),
+          new qq.maps.LatLng(39.930, 116.420)*/
+          for (var i in coordinators){
+            path1.push(new qq.maps.LatLng(coordinators[i][0],coordinators[i][1]))
+          }
+          console.log(coordinators);
+          var polyline = new qq.maps.Polyline({
+              path: path1,
+              strokeColor: '#cc3300',
+              strokeWeight: 5,
+              editable:false,
+              map: map
+          });
+      };
+
+    </script>
+  </head>
+  <body onload="init()">
+    <ul>
+      <% for (var i in coordinators) {%>
+        <li><%=coordinators[i][0]%>,<%=coordinators[i][1]%></li>
+      <%}%>
+    </ul>
+    <div id="container"></div>
+
+    <%# <div id="info">
+        <button id="mapM" class="btn">setMap</button>
+        <button id="cursor" class="btn">setCursor</button>
+        <button id="path" class="btn">setPath</button>
+        <button id="strokeC" class="btn">setStrokeColor</button>
+        <button id="dash" class="btn">setStrokeDashStyle</button>
+        <button id="strokeWeight" class="btn">setStrokeWeight</button>
+        <button id="visibleT" class="btn">setVisible</button>
+    </div>%>
+  </body>
+</html>
