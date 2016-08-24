@@ -6,7 +6,7 @@ var router = express.Router();
 /*new qq.maps.LatLng(39.910, 116.399),
 new qq.maps.LatLng(39.920, 116.405),
 new qq.maps.LatLng(39.930, 116.420)*/
-var coordinators = [[39.910,116.399],[39.920,116.405],[39.930,116.420]]
+var coordinators = [[39.783,116.064],[39.782, 116.070],[39.780, 116.075]]
 
 router.get('/', function(req, res) {
   res.render('index', { title: 'Express' });
@@ -14,6 +14,7 @@ router.get('/', function(req, res) {
 
 
 router.get('/map',function(req,res){
+
   res.render('map',{
     coordinators : coordinators
   });

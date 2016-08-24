@@ -25,22 +25,22 @@ body, button, input, select, textarea {
 <!-- <script charset="utf-8" src="../lib/tencent-map-intro.js"></script> -->
 <script>
 var init = function() {
-    var center = new qq.maps.LatLng(39.916527,116.397128);
+    var center = new qq.maps.LatLng(39.7837416083,116.0649584370);
     var map = new qq.maps.Map(document.getElementById('container'),{
         center: center,
         zoom: 13
     });
     var path1=[
-        new qq.maps.LatLng(39.910, 116.399),
-        new qq.maps.LatLng(39.920, 116.405),
-        new qq.maps.LatLng(39.930, 116.420)
+        new qq.maps.LatLng(39.783,116.064),
+        new qq.maps.LatLng(39.703, 116.060),
+        new qq.maps.LatLng(39.655, 116.058)
     ];
-    var path2=[
-        new qq.maps.LatLng(39.930456,116.387554),
-        new qq.maps.LatLng(39.929008,116.414162),
-        new qq.maps.LatLng(39.909786,116.379314),
-        new qq.maps.LatLng(39.908206,116.416908)
-    ];
+    // var path2=[
+    //     new qq.maps.LatLng(39.930456,116.387554),
+    //     new qq.maps.LatLng(39.929008,116.414162),
+    //     new qq.maps.LatLng(39.909786,116.379314),
+    //     new qq.maps.LatLng(39.908206,116.416908)
+    // ];
     var polyline = new qq.maps.Polyline({
         path: path1,
         strokeColor: '#1ab394',

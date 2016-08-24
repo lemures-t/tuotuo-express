@@ -1,8 +1,152 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+// body {
+//   padding: 50px;
+//   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+// }
+
+@font-face {
+  font-family:customized;
+  src:url('/font/customs.TTF');
 }
 
 a {
   color: #00B7FF;
+}
+
+*{
+    margin:0px;
+    padding:0px;
+}
+body, button, input, select, textarea {
+    font: 16px/16px 'customized' , Verdana, Helvetica, Arial, sans-serif;
+    color:#ffffff;
+    background-color:#a70721;
+    text-align:center;
+}
+#info{
+    width:603px;
+    padding-top:3px;
+    overflow:hidden;
+}
+.btn{
+    width:142px;
+}
+header{
+  background-color: #910219;
+  height:50px;
+  font-size:30px;
+  line-height:50px;
+}
+#hint{
+  p{
+    font-size:18px;
+    margin:10px 0;
+    letter-spacing: 2px;
+    &:first-child{
+      margin-top:20px;
+    }
+    &:nth-child(3){
+      margin-bottom:20px;
+    }
+  }
+}
+#container{
+  margin:0 auto;
+  border: 5px solid #e9c19d;
+  border-radius: 5px;
+  width:300px;
+  height:250px
+}
+#record{
+  margin-top:20px;
+  margin-bottom:20px;
+  #record-hint{
+    color:#000000;
+    width:80px;
+    padding:4px 0;
+    margin-left:20px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    border:1px solid #ffffff;
+    box-shadow: inset -1px 2px #dfdfdf;
+  }
+  #audio-list{
+    margin-top:20px;
+    height:120px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    .duration{
+      margin-left:10px;
+    }
+  }
+  #audio-wrapper{
+    text-align:left;
+    margin-left:20px;
+    margin-top:10px;
+    > *{
+      vertical-align:middle;
+      display:inline-block;
+    }
+  }
+  #audio{
+    display:none;
+  }
+  #play-pause{
+    height:24px;
+    > img {
+      width:24px;
+      height:24px;
+
+    }
+    #pause{
+      display:none;
+    }
+  }
+  #progress{
+    width:200px;
+    height:5px;
+    background-color:#ffffff;
+    display:inline-block;
+    position:relative;
+  }
+  #left-time{
+    margin-left:5px;
+  }
+  li{
+    border-bottom:1px solid #cbc8c9;
+    padding-bottom: 5px;
+    font-size:20px;
+    width:90%;
+    margin:0 auto 10px auto;
+    list-style:none;
+  }
+}
+
+#pointer{
+  display:block;
+  width:5px;
+  height:15px;
+  position:absolute;
+  left:0px;
+  bottom:-5px;
+  background-color:#000000;
+}
+
+#refresh-wrapper{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:20px;
+  margin:auto;
+  // margin-bottom:20px;
+  #refresh{
+    width:130px;
+    font-size:20px;
+    background-color: #ffffff;
+    color:#000000;
+    padding:5px 0;
+    border-radius: 5px;
+    border:1px solid #ffffff;
+    box-shadow: inset -1px 2px #dfdfdf;
+    margin:0 auto;
+  }
 }
