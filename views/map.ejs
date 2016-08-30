@@ -2,46 +2,51 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <%# <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>%>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>妥妥 - 妹纸你妥妥地向前走</title>
-    <style type="text/css">
-      *{
-          margin:0px;
-          padding:0px;
-      }
-      body, button, input, select, textarea {
-          font: 12px/16px Verdana, Helvetica, Arial, sans-serif;
-      }
-      #info{
-          width:603px;
-          padding-top:3px;
-          overflow:hidden;
-      }
-      .btn{
-          width:142px;
-      }
-      #container{
-      	width:600px;
-      	height:767px;
-      }
-    </style>
+    <link rel="stylesheet" href="/css/style.css" charset="utf-8">
     <script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>
     <%# <script type="text/javascript" src ="/js/tencent-map.js"></script>%>
     <script type="text/javascript">
       var init = function() {
-          var center = new qq.maps.LatLng(39.930, 116.420);
+
+          var center = new qq.maps.LatLng(39.782, 116.070);
           var map = new qq.maps.Map(document.getElementById('container'),{
               center: center,
-              zoom: 13
+              zoom: 15,
+              zoomControl:true
           });
           var path1=[];
           var coordinators = JSON.parse('<%= JSON.stringify(coordinators)%>')
+          var setMarker = function(coordinator){
+            var marker = new qq.maps.Marker({
+              position : new qq.maps.LatLng(coordinator[0],coordinator[1]),
+              map: map
+            })
 
+            marker.setIcon(new qq.maps.MarkerImage(
+              // url
+              '/img/marker.png',
+              // size 是图标尺寸，该尺寸为显示图标的实际尺寸
+              // new qq.maps.Size(16,16)
+              undefined,
+              // origin 是切图坐标，该坐标是相对于图片左上角默认为（0,0）的相对像素坐标
+              // new qq.maps.Point(0,0),
+              undefined,
+              // anchor 是锚点坐标，描述经纬度点对应图标中的位置 即定位点距离图片左上角的偏移量。
+              // new qq.maps.Point(8,16)
+              undefined,
+              // scaleSize 缩放大小，用于拉伸或缩小原图片时使用，该尺寸是用来改变整个图片的尺寸
+              new qq.maps.Size(17,18)
+            ))
+          }
           /*new qq.maps.LatLng(39.910, 116.399),
           new qq.maps.LatLng(39.920, 116.405),
           new qq.maps.LatLng(39.930, 116.420)*/
           for (var i in coordinators){
-            path1.push(new qq.maps.LatLng(coordinators[i][0],coordinators[i][1]))
+            path1.push(new qq.maps.LatLng(coordinators[i][0],coordinators[i][1]));
+            setMarker(coordinators[i]);
           }
           console.log(coordinators);
           var polyline = new qq.maps.Polyline({
@@ -51,17 +56,132 @@
               editable:false,
               map: map
           });
+
+          document.getElementById('refresh').onclick = function(){
+            window.location.reload();
+          }
+
+          var audio = document.getElementById('audio');
+
+          var play = document.getElementById('play'),
+              pause = document.getElementById('pause'),
+              progress = document.getElementById('progress'),
+              pointer = document.getElementById('pointer'),
+              leftTime = document.getElementById('left-time'),
+              intervalId;
+
+          var h = audio.duration / 60 / 60 ,
+              hf= hfo = Math.floor(h),
+              m = (audio.duration -hf*60*60) / 60 ,
+              mf= mfo = Math.floor(m),
+              s = (audio.duration - hf*60*60 - mf*60),
+              sf= sfo = Math.floor(s);
+          var generateTime = function(hf,mf,sf){
+            return (hf < 10 ? '0'+hf : hf) + ":"
+                +  (hf < 10 ? '0'+mf : mf) + ":"
+                +  (sf < 10 ? '0'+sf : sf) ;
+          }
+          leftTime.innerHTML =  generateTime(hf,mf,sf)
+
+          play.onclick = function(){
+            // 播放完成之后，再次点击播放，需要将进度条重置
+            if (audio.currentTime == audio.duration){
+              pointer.style = "left:0px";
+              hf = hfo;
+              mf = mfo;
+              sf = sfo;
+              leftTime.innerHTML =  generateTime(hf,mf,sf)
+            }
+            audio.play();
+            this.style='display:none';
+            pause.style='display:inline-block';
+            if (!intervalId){
+              var progress_width = progress.offsetWidth;
+              intervalId = setInterval(function(){
+                var move = (audio.currentTime / audio.duration ) * progress_width;
+                pointer.style = "left:" + Math.floor(move) + "px";
+
+                if (sf > 0){
+                  --sf;
+                }else if (sf == 0 && mf > 0){
+                  sf = 59;
+                  --mf;
+                }else if (sf == 0 && mf == 0 && hf > 0){
+                  sf = 59;
+                  mf = 59;
+                  --hf;
+                }
+
+                leftTime.innerHTML = generateTime(hf,mf,sf)
+                // console.log(intervalId);
+              },1000)
+            }
+          }
+
+          pause.onclick = function(){
+            audio.pause();
+            this.style='display:none';
+            play.style='display:inline-block';
+            if (typeof intervalId !== 'undefined'){
+              clearInterval(intervalId);
+              intervalId = null;
+            }
+          }
+
+          audio.addEventListener('ended', function(){
+            this.pause();
+            pause.style='display:none';
+            play.style='display:inline-block';
+            if (typeof intervalId !== 'undefined'){
+              // console.log(intervalId);
+              clearInterval(intervalId);
+              intervalId = null;
+              leftTime.innerHTML = generateTime(0,0,0)
+            }
+          }, false);
+
+
       };
 
     </script>
   </head>
   <body onload="init()">
-    <ul>
-      <% for (var i in coordinators) {%>
-        <li><%=coordinators[i][0]%>,<%=coordinators[i][1]%></li>
-      <%}%>
-    </ul>
-    <div id="container"></div>
+    <header>妥妥</header>
+    <section id='hint'>
+      <p>你的好友xxx正处于危险中</p>
+      <p>她的位置和录音正在记录</p>
+      <p>请马上对她进行帮助</p>
+      <div id="container"></div>
+    </section>
+    <section id="record">
+      <div id="record-hint">手机录音</div>
+      <div id='audio-wrapper'>
+        <audio id="audio" src="/audio/sleep away.mp3" controls preload='meta'></audio>
+        <span id="play-pause">
+          <img src="/img/play.png" alt="play" id="play">
+          <img src="/img/pause.png" alt="pasue" id="pause">
+        </span>
+        <span id="progress">
+          <span id="pointer"></span>
+        </span>
+        <span id="date">16/8/17</span>
+        <span id="left-time">3</span>
+      </div>
+
+
+
+      <ul id="audio-list">
+        <li><span>16/8/17</span><span class="duration">00:06:42</span></li>
+        <li><span>16/8/17</span><span class="duration">00:03:35</span></li>
+        <li><span>16/8/17</span><span class="duration">00:02:10</span></li>
+        <li><span>16/8/17</span><span class="duration">00:00:15</span></li>
+        <li><span>16/8/17</span><span class="duration">00:00:15</span></li>
+      </ul>
+    </section>
+    <section id="refresh-wrapper">
+      <div id="refresh">刷新数据</div>
+    </section>
+
 
     <%# <div id="info">
         <button id="mapM" class="btn">setMap</button>
