@@ -48,7 +48,7 @@
             path1.push(new qq.maps.LatLng(coordinators[i][0],coordinators[i][1]));
             setMarker(coordinators[i]);
           }
-          console.log(coordinators);
+          console.log(coordinators[coordinators.length-1]);
           var polyline = new qq.maps.Polyline({
               path: path1,
               strokeColor: '#cc3300',
@@ -156,7 +156,7 @@
     <section id="record">
       <div id="record-hint">手机录音</div>
       <div id='audio-wrapper'>
-        <audio id="audio" src="/audio/sleep away.mp3" controls preload='meta'></audio>
+        <audio id="audio" src="/audio/Sleep Away.mp3" controls preload='meta'></audio>
         <span id="play-pause">
           <img src="/img/play.png" alt="play" id="play">
           <img src="/img/pause.png" alt="pasue" id="pause">

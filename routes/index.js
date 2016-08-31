@@ -22,7 +22,7 @@ router.get('/map',function(req,res){
 
 router.post('/coordinator',function(req,res){
   coordinators.push([parseFloat(req.body.x),parseFloat(req.body.y)]);
-  console.log(coordinators);
+  console.log(coordinators[coordinators.length -1]);
   res.send('good');
 })
 
