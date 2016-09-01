@@ -10,7 +10,13 @@
     <%# <script type="text/javascript" src ="/js/tencent-map.js"></script>%>
     <script type="text/javascript">
       var init = function() {
-
+          // TODO:
+          // 1. empty the init coordinators;
+          // 2. make the center coordinator the first [x,y] received;
+          // 3. delete the mp3 file;
+          // 4. adjust the entire page ratio to fit the mobile browser etc.;
+          // 5. relocate the bottom button to make it always at the bottom side;
+          // 6. choose the fittest device to show;
           var center = new qq.maps.LatLng(39.782, 116.070);
           var map = new qq.maps.Map(document.getElementById('container'),{
               center: center,
@@ -61,7 +67,7 @@
             window.location.reload();
           }
 
-          var audio = document.getElementById('audio');
+          // var audio = document.getElementById('audio');
 
           var play = document.getElementById('play'),
               pause = document.getElementById('pause'),
@@ -70,75 +76,75 @@
               leftTime = document.getElementById('left-time'),
               intervalId;
 
-          var h = audio.duration / 60 / 60 ,
-              hf= hfo = Math.floor(h),
-              m = (audio.duration -hf*60*60) / 60 ,
-              mf= mfo = Math.floor(m),
-              s = (audio.duration - hf*60*60 - mf*60),
-              sf= sfo = Math.floor(s);
-          var generateTime = function(hf,mf,sf){
-            return (hf < 10 ? '0'+hf : hf) + ":"
-                +  (hf < 10 ? '0'+mf : mf) + ":"
-                +  (sf < 10 ? '0'+sf : sf) ;
-          }
-          leftTime.innerHTML =  generateTime(hf,mf,sf)
+          // var h = audio.duration / 60 / 60 ,
+          //     hf= hfo = Math.floor(h),
+          //     m = (audio.duration -hf*60*60) / 60 ,
+          //     mf= mfo = Math.floor(m),
+          //     s = (audio.duration - hf*60*60 - mf*60),
+          //     sf= sfo = Math.floor(s);
+          // var generateTime = function(hf,mf,sf){
+          //   return (hf < 10 ? '0'+hf : hf) + ":"
+          //       +  (hf < 10 ? '0'+mf : mf) + ":"
+          //       +  (sf < 10 ? '0'+sf : sf) ;
+          // }
+          // leftTime.innerHTML =  generateTime(hf,mf,sf)
 
-          play.onclick = function(){
-            // 播放完成之后，再次点击播放，需要将进度条重置
-            if (audio.currentTime == audio.duration){
-              pointer.style = "left:0px";
-              hf = hfo;
-              mf = mfo;
-              sf = sfo;
-              leftTime.innerHTML =  generateTime(hf,mf,sf)
-            }
-            audio.play();
-            this.style='display:none';
-            pause.style='display:inline-block';
-            if (!intervalId){
-              var progress_width = progress.offsetWidth;
-              intervalId = setInterval(function(){
-                var move = (audio.currentTime / audio.duration ) * progress_width;
-                pointer.style = "left:" + Math.floor(move) + "px";
-
-                if (sf > 0){
-                  --sf;
-                }else if (sf == 0 && mf > 0){
-                  sf = 59;
-                  --mf;
-                }else if (sf == 0 && mf == 0 && hf > 0){
-                  sf = 59;
-                  mf = 59;
-                  --hf;
-                }
-
-                leftTime.innerHTML = generateTime(hf,mf,sf)
-                // console.log(intervalId);
-              },1000)
-            }
-          }
-
-          pause.onclick = function(){
-            audio.pause();
-            this.style='display:none';
-            play.style='display:inline-block';
-            if (typeof intervalId !== 'undefined'){
-              clearInterval(intervalId);
-              intervalId = null;
-            }
-          }
-
-          audio.addEventListener('ended', function(){
-            this.pause();
-            pause.style='display:none';
-            play.style='display:inline-block';
-            if (typeof intervalId !== 'undefined'){
-              // console.log(intervalId);
-              clearInterval(intervalId);
-              intervalId = null;
-              leftTime.innerHTML = generateTime(0,0,0)
-            }
-          }, false);
+          // play.onclick = function(){
+          //   // 播放完成之后，再次点击播放，需要将进度条重置
+          //   if (audio.currentTime == audio.duration){
+          //     pointer.style = "left:0px";
+          //     hf = hfo;
+          //     mf = mfo;
+          //     sf = sfo;
+          //     leftTime.innerHTML =  generateTime(hf,mf,sf)
+          //   }
+          //   audio.play();
+          //   this.style='display:none';
+          //   pause.style='display:inline-block';
+          //   if (!intervalId){
+          //     var progress_width = progress.offsetWidth;
+          //     intervalId = setInterval(function(){
+          //       var move = (audio.currentTime / audio.duration ) * progress_width;
+          //       pointer.style = "left:" + Math.floor(move) + "px";
+          //
+          //       if (sf > 0){
+          //         --sf;
+          //       }else if (sf == 0 && mf > 0){
+          //         sf = 59;
+          //         --mf;
+          //       }else if (sf == 0 && mf == 0 && hf > 0){
+          //         sf = 59;
+          //         mf = 59;
+          //         --hf;
+          //       }
+          //
+          //       leftTime.innerHTML = generateTime(hf,mf,sf)
+          //       // console.log(intervalId);
+          //     },1000)
+          //   }
+          // }
+          //
+          // pause.onclick = function(){
+          //   audio.pause();
+          //   this.style='display:none';
+          //   play.style='display:inline-block';
+          //   if (typeof intervalId !== 'undefined'){
+          //     clearInterval(intervalId);
+          //     intervalId = null;
+          //   }
+          // }
+          //
+          // audio.addEventListener('ended', function(){
+          //   this.pause();
+          //   pause.style='display:none';
+          //   play.style='display:inline-block';
+          //   if (typeof intervalId !== 'undefined'){
+          //     // console.log(intervalId);
+          //     clearInterval(intervalId);
+          //     intervalId = null;
+          //     leftTime.innerHTML = generateTime(0,0,0)
+          //   }
+          // }, false);
 
 
       };
@@ -156,7 +162,8 @@
     <section id="record">
       <div id="record-hint">手机录音</div>
       <div id='audio-wrapper'>
-        <audio id="audio" src="/audio/Sleep Away.mp3" controls preload='meta'></audio>
+        <%# <audio id="audio" src="/audio/Sleep Away.mp3" controls preload='meta'></audio>%>
+        <audio id="audio" controls preload='meta'></audio>
         <span id="play-pause">
           <img src="/img/play.png" alt="play" id="play">
           <img src="/img/pause.png" alt="pasue" id="pause">
@@ -165,7 +172,7 @@
           <span id="pointer"></span>
         </span>
         <span id="date">16/8/17</span>
-        <span id="left-time">3</span>
+        <span id="left-time">00:03:12</span>
       </div>
 
 
