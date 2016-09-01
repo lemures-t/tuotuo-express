@@ -61,8 +61,12 @@ header {
     height: 120px;
     overflow-y: auto;
     overflow-x: hidden; }
+    #record #audio-list > li {
+      display: flex; }
+    #record #audio-list .date {
+      flex: 1; }
     #record #audio-list .duration {
-      margin-left: 10px; }
+      flex: 1; }
   #record #audio-wrapper {
     text-align: left;
     margin-left: 20px;
