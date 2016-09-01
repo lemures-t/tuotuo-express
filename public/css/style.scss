@@ -85,23 +85,25 @@ header{
     }
   }
   #audio-wrapper{
+    display:flex;
     text-align:left;
     margin-left:20px;
     margin-top:10px;
+    align-items: center;
     > *{
       vertical-align:middle;
-      display:inline-block;
+
     }
   }
   #audio{
     display:none;
   }
   #play-pause{
+    flex:1;
     height:24px;
     > img {
       width:24px;
       height:24px;
-
     }
     #pause{
       display:none;
@@ -113,9 +115,14 @@ header{
     background-color:#ffffff;
     display:inline-block;
     position:relative;
+    flex:3
   }
   #left-time{
+    flex:1;
     margin-left:5px;
+  }
+  #date{
+    flex:1;
   }
   li{
     border-bottom:1px solid #cbc8c9;
